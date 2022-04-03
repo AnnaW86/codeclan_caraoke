@@ -34,13 +34,13 @@ class TestRoom(unittest.TestCase):
             self.drink3: 40,
             self.drink4: 35,
             self.drink5: 60}
-        self.room1 = Room("Radio Star", [self.song3], 10, 12, self.bar_tab, self.drinks)
+        self.room1 = Room("Radio Star", [self.song3], 10, 12, self.bar_tab, self.drinks, [])
         self.room2 = Room("Sing Sing", room2_playlist, 5, 15, self.bar_tab, self.drinks, room2_guests)
 
 
     def test_can_add_guest(self):
-        self.room1.check_in(self.guest1)
-        self.assertEqual(self.guest1.name, self.room1.guests[0].name)
+        self.room1.check_in(self.guest6)
+        self.assertEqual("Judy Mitchell", self.room1.guests[0].name)
 
     def test_can_remove_guest(self):
         self.room2.check_out(self.guest3)

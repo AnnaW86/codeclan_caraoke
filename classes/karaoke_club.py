@@ -5,8 +5,8 @@ class KaraokeClub:
         self.guests = guests
         self.till = till
     
-    def take_money(self, room):
-        self.till += room.price
+    def take_money(self, item):
+        self.till += item.price
 
     def check_guest_can_be_admitted(self, guest, room):
         if room.check_capacity() == False:
@@ -16,11 +16,29 @@ class KaraokeClub:
         if guest.check_old_enough() == False:
             return False, f"Sorry, kid, go home!"
         return True, ""
-            
+
     def admit_guest(self, guest, room):
+        room.check_in(guest)
+        guest.pay_for_item(room)
+        self.take_money(room)
+        if hasattr(guest, 'loyalty_tally'):
+            guest.increase_loyalty_tally()
+
+    def admit_regular_guest(self, guest, room):
         if self.check_guest_can_be_admitted(guest, room)[0]:
-            room.check_in(guest)
-            guest.pay_for_something(room)
-            self.take_money(room)
+            self.admit_guest(guest, room)
         else:
             return self.check_guest_can_be_admitted(guest, room)[1]
+    
+
+    def admit_loyalty_guest(self, loyalty_guest, room):
+        if self.check_guest_can_be_admitted(loyalty_guest, room)[0]:
+            if loyalty_guest.loyalty_tally <=9:
+                self.admit_guest(loyalty_guest, room)
+                if loyalty_guest.loyalty_tally == 10:
+                    return "Next one's free!"
+            if loyalty_guest.loyalty_tally == 10:
+                room.check_in(loyalty_guest)
+                loyalty_guest.loyalty_tally = 0
+        else:
+            return self.check_guest_can_be_admitted(loyalty_guest, room)[1]

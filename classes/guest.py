@@ -3,9 +3,15 @@ class Guest:
         self.name = name
         self.wallet = wallet
         self.age = age
+        self.discount_rate = 1
     
-    def pay_for_something(self, item):
+    def pay_for_item(self, item):
         self.wallet -= item.price
+    
+    def pay_for_drink(self, item):
+        amount = item.price * self.discount_rate
+        self.wallet -= amount
+        return amount
     
     def check_old_enough(self):
         return self.age >= 18

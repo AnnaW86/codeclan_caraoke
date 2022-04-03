@@ -28,7 +28,7 @@ class TestGuest(unittest.TestCase):
         self.room1 = Room("Radio Star", room1_playlist, 10, 12, bar_tab, self.drinks)
 
     def test_can_pay(self):
-        self.guest1.pay_for_something(self.drink4)
+        self.guest1.pay_for_item(self.drink4)
         self.assertEqual(40, self.guest1.wallet)
     
     def test_can_cheer_favourite(self):
